@@ -17,12 +17,12 @@ export class EmployeeService {
     return this.http.get(`${this.api}/${id}`);
   }
 
-  createEmployee(employee: any) {
-    return this.http.post(this.api, employee);
+  createEmployee(employeeRequest: any) {
+    return this.http.post(this.api, employeeRequest);
   }
 
-  updateEmployee(id: number, employee: any) {
-    return this.http.put(`${this.api}/${id}`, employee);
+  updateEmployee(id: number, employeeRequest: any) {
+    return this.http.put(`${this.api}/${id}`, employeeRequest);
   }
 
   deleteEmployee(id: number) {
