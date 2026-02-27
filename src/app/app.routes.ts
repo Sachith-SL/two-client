@@ -4,11 +4,17 @@ import { EmployeeListComponent } from './components/employee-list/employee-list.
 import { EmployeeDetailComponent } from './components/employee-detail/employee-detail.component';
 import { EmployeeEditComponent } from './components/employee-edit/employee-edit.component';
 import { EmployeeCreateComponent } from './components/employee-create/employee-create.component';
+import { LoginComponent } from './components/login/login.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'employees',
@@ -25,5 +31,10 @@ export const routes: Routes = [
   {
     path: 'employee/edit/:id',
     component: EmployeeEditComponent,
+  },
+  // Wildcard route for 404 page
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { EmployeeDto } from '../../models/employee-dto.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormBuilder,
@@ -9,6 +8,9 @@ import {
 } from '@angular/forms';
 import { CommonModule, } from '@angular/common';
 import { EmployeeService } from '../../services/employee.service';
+import { Employee } from '../../models/employee.model';
+import { Department } from '../../models/department.model';
+import { DepartmentService } from '../../services/department.service';
 
 @Component({
   selector: 'app-employee-edit',
@@ -18,18 +20,21 @@ import { EmployeeService } from '../../services/employee.service';
 })
 export class EmployeeEditComponent {
 
-  employee: EmployeeDto | null = null;
+  employee: Employee | null = null;
+  departments: Department[] = [];
   employeeForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private employeeService: EmployeeService,
+    private departmentService: DepartmentService,
     private fb: FormBuilder
   ) {
     this.employeeForm = this.fb.group({
       name: ['', Validators.required],
-      address: ['', Validators.required],
+      salary: ['', Validators.required],
+      departmentId: ['', Validators.required],
     });
   }
 
@@ -38,12 +43,22 @@ export class EmployeeEditComponent {
 
     if (id) {
       this.employeeService.getEmployeeById(+id).subscribe((data) => {
-        this.employee = data as EmployeeDto;
+        this.employee = data as Employee;
         this.employeeForm.patchValue({
           name: this.employee.name,
-          address: this.employee.address,
+          salary: this.employee.salary,
+          departmentId: this.employee.departmentId,
         });
       });
+
+          this.departmentService.getDepartments().subscribe({
+            next: (departments: Department[]) => {
+              this.departments = departments;
+            },
+            error: (err) => {
+              console.error('Failed to load departments:', err);
+            },
+          });
     }
   }
 

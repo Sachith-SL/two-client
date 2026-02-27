@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
+
 import { CommonModule, NgForOf } from '@angular/common';
 import { Employee } from '../../models/employee.model';
 import { RouterModule } from '@angular/router';
+import { Department } from '../../models/department.model';
+import { DepartmentService } from '../../services/department.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -31,11 +34,19 @@ export class EmployeeListComponent {
       });
     }
   }
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    public departmentService: DepartmentService,
+  ) {}
 
   ngOnInit() {
     this.employeeService.getEmployees().subscribe((data) => {
       this.employees = data as Employee[];
     });
+    this.departmentService
+      .getDepartments()
+      .subscribe((departments: Department[]) => {
+        this.departmentService.departments = departments;
+      });
   }
 }
