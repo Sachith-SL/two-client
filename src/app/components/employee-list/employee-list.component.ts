@@ -6,15 +6,23 @@ import { Employee } from '../../models/employee.model';
 import { RouterModule } from '@angular/router';
 import { Department } from '../../models/department.model';
 import { DepartmentService } from '../../services/department.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
   styles: ``,
-  imports: [NgForOf, CommonModule, RouterModule],
+  imports: [NgForOf, CommonModule, RouterModule, FormsModule],
 })
 export class EmployeeListComponent {
   employees: Employee[] = [];
+  searchTerm: string = '';
+  get filteredEmployees(): Employee[] {
+    if (!this.searchTerm.trim()) return this.employees;
+    return this.employees.filter(emp =>
+      emp.name.toLowerCase().includes(this.searchTerm.trim().toLowerCase())
+    );
+  }
 
   isDeleting: number | null = null;
   deleteEmployee(id: number): void {
