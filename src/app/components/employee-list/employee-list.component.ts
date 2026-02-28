@@ -15,12 +15,25 @@ import { FormsModule } from '@angular/forms';
   imports: [NgForOf, CommonModule, RouterModule, FormsModule],
 })
 export class EmployeeListComponent {
+  currentPage = 1;
+  pageSize = 10;
+
   employees: Employee[] = [];
   searchTerm: string = '';
+
+  get paginatedEmployees(): Employee[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.filteredEmployees.slice(start, start + this.pageSize);
+}
+
+get totalPages(): number {
+  return Math.ceil(this.filteredEmployees.length / this.pageSize);
+}
+
   get filteredEmployees(): Employee[] {
     if (!this.searchTerm.trim()) return this.employees;
-    return this.employees.filter(emp =>
-      emp.name.toLowerCase().includes(this.searchTerm.trim().toLowerCase())
+    return this.employees.filter((emp) =>
+      emp.name.toLowerCase().includes(this.searchTerm.trim().toLowerCase()),
     );
   }
 
