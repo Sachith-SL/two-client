@@ -6,6 +6,7 @@ import { EmployeeEditComponent } from './components/employee-edit/employee-edit.
 import { EmployeeCreateComponent } from './components/employee-create/employee-create.component';
 import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+    {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: 'employees',
